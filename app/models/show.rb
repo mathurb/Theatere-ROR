@@ -3,7 +3,7 @@ class Show < ApplicationRecord
     validates :seats, presence: true ,numericality:{only_integer: true}
     has_many :bookings
     belongs_to :audi
-    before_create :no_of_seats
+    after_create :no_of_seats
     private 
     def no_of_seats
       self.seats = @audi.seats
