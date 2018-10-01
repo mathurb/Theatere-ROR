@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_28_065449) do
+ActiveRecord::Schema.define(version: 2018_10_01_183720) do
 
   create_table "audis", force: :cascade do |t|
     t.integer "number"
     t.integer "seats"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "theater_id"
+    t.index ["theater_id"], name: "index_audis_on_theater_id"
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -24,6 +26,10 @@ ActiveRecord::Schema.define(version: 2018_09_28_065449) do
     t.integer "seats"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "show_id"
+    t.integer "theater_id"
+    t.index ["show_id"], name: "index_bookings_on_show_id"
+    t.index ["theater_id"], name: "index_bookings_on_theater_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -31,6 +37,8 @@ ActiveRecord::Schema.define(version: 2018_09_28_065449) do
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "audi_id"
+    t.index ["audi_id"], name: "index_movies_on_audi_id"
   end
 
   create_table "shows", force: :cascade do |t|
@@ -38,6 +46,8 @@ ActiveRecord::Schema.define(version: 2018_09_28_065449) do
     t.integer "seats"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "audi_id"
+    t.index ["audi_id"], name: "index_shows_on_audi_id"
   end
 
   create_table "theaters", force: :cascade do |t|
@@ -52,6 +62,12 @@ ActiveRecord::Schema.define(version: 2018_09_28_065449) do
     t.integer "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "audi_id"
+    t.integer "movie_id"
+    t.integer "booking_id"
+    t.index ["audi_id"], name: "index_tickets_on_audi_id"
+    t.index ["booking_id"], name: "index_tickets_on_booking_id"
+    t.index ["movie_id"], name: "index_tickets_on_movie_id"
   end
 
   create_table "viewers", force: :cascade do |t|
